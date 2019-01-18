@@ -3,6 +3,9 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 
+// database setup
+require("./database/firebaseConfig");
+
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
