@@ -17,12 +17,12 @@ export default class MountainsScreen extends React.Component {
 	render() {
 		return (
 			<ScrollView style={styles.container}>
-				<Text style={styles.heading}>Mountians List</Text>
+				<Text style={styles.heading}>Mountains List</Text>
 				<FlatList
 					data={mountains}
 					keyExtractor={(item, idx) => idx.toString()}
 					renderItem={(item, idx) => (
-						<TouchableOpacity onPress={() => this._onPress(item.item.name)}>
+						<TouchableOpacity onPress={() => this._onPress(item.item)}>
 							<View style={styles.mountainContainer}>
 								<Image source={item.item.image} style={styles.mountainImg} />
 								<Text style={styles.mountainTitle}>
@@ -40,8 +40,8 @@ export default class MountainsScreen extends React.Component {
 		);
 	}
 
-	_onPress = (name) => {
-		console.log(name);
+	_onPress = (mountain) => {
+		this.props.navigation.navigate("Details", {mountain});
 	}
 }
 

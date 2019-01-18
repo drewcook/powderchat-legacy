@@ -5,6 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import MountainsScreen from '../screens/MountainsScreen';
+import MountainDetailsScreen from "../screens/MountainDetails";
 import ChatScreen from "../screens/ChatScreen";
 import SettingsScreen from '../screens/SettingsScreen';
 
@@ -26,9 +27,15 @@ HomeStack.navigationOptions = {
 	),
 };
 
-const MountainsStack = createStackNavigator({
-	Mountains: MountainsScreen,
-});
+const MountainsStack = createStackNavigator(
+	{
+		Mountains: MountainsScreen,
+		Details: MountainDetailsScreen,
+	},
+	{
+		initialRouteName: "Mountains"
+	}
+);
 
 MountainsStack.navigationOptions = {
 	tabBarLabel: 'Mountains',
