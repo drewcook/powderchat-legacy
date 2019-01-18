@@ -9,11 +9,9 @@ import {
 	View,
 } from 'react-native';
 import colors from "../constants/Colors";
-import { AuthSession } from "expo";
-//import { WebBrowser } from 'expo';
-import { MonoText } from '../components/StyledText';
+//import { AuthSession } from "expo";
 
-const FB_APP_ID = "566780290461704";
+import {loginWithFacebook} from "../database/firebaseConfig";
 
 export default class HomeScreen extends React.Component {
 	state = {
@@ -34,10 +32,10 @@ export default class HomeScreen extends React.Component {
 
 					<View style={styles.getStartedContainer}>
 						<Text style={styles.getStartedText}>
-							Welcome to Mountain Chat!
+							Welcome to SlopeChat!
 						</Text>
 						{!this.state.userInfo ? (
-								<TouchableOpacity style={styles.logInBtn} onPress={this._handleFBLogin}>
+								<TouchableOpacity style={styles.logInBtn} onPress={() => loginWithFacebook()}>
 									<Text style={styles.logInBtnText}>Log In With Facebook</Text>
 								</TouchableOpacity>
 							) :
@@ -49,7 +47,7 @@ export default class HomeScreen extends React.Component {
 		);
 	}
 
-	_handlePressAsync = async () => {
+	/*_handlePressAsync = async () => {
 		let redirectUrl = AuthSession.getRedirectUrl();
 		let result = await AuthSession.startAsync({
 			authUrl:
@@ -58,9 +56,9 @@ export default class HomeScreen extends React.Component {
 			`&redirect_uri=${encodeURIComponent(redirectUrl)}`,
 		});
 		this.setState({ result });
-	};
+	};*/
 
-	_handleFBLogin = async () => {
+	/*_handleFBLogin = async () => {
 		try {
 			const {
 				type,
@@ -82,7 +80,7 @@ export default class HomeScreen extends React.Component {
 		} catch ({ message }) {
 			alert(`Facebook Login Error: ${message}`);
 		}
-	}
+	}*/
 
 	_renderUserInfo = () => {
 		return (

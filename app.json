@@ -1,7 +1,7 @@
 {
 	"expo": {
-		"name": "Mountain Chat",
-		"slug": "mountain_chat",
+		"name": "SlopeChat",
+		"slug": "slopechat",
 		"privacy": "public",
 		"sdkVersion": "32.0.0",
 		"platforms": [
@@ -9,7 +9,7 @@
 			"android"
 		],
 		"version": "1.0.0",
-		"githubUrl": "https://github.com/drewcook/mountain_chat",
+		"githubUrl": "https://github.com/drewcook/SlopeChat",
 		"orientation": "portrait",
 		"icon": "./assets/images/icon.png",
 		"splash": {
@@ -27,7 +27,7 @@
 			"supportsTablet": true
 		},
 		"facebookAppId": "566780290461704",
-		"facebookDisplayName": "Mountain Chat",
+		"facebookDisplayName": "SlopeChat",
 		"facebookScheme": "fb566780290461704"
 	}
 }
