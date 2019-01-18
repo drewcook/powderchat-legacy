@@ -1,40 +1,48 @@
 import React from 'react';
 import {
 	FlatList,
-	Image,
 	Platform,
 	ScrollView,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
 	View,
-} from 'react-native';
+} from "react-native";
 import Icon from '../components/Icon';
-import { mountains } from "../constants/mountains";
 
-export default class MountainsScreen extends React.Component {
+const chats = [
+	{
+		name: "Purgatory",
+	},
+	{
+		name: "Wolf Creek",
+	},
+	{
+		name: "Keystone",
+	},
+]
 
+export default class ChatScreen extends React.Component {
 	render() {
 		return (
 			<ScrollView style={styles.container}>
-				<Text style={styles.heading}>Mountians List</Text>
+				<Text style={styles.heading}>SlopeChats</Text>
 				<FlatList
-					data={mountains}
+					data={chats}
 					keyExtractor={(item, idx) => idx.toString()}
 					renderItem={(item, idx) => (
 						<TouchableOpacity onPress={() => this._onPress(item.item.name)}>
-							<View style={styles.mountainContainer}>
-								<Image source={item.item.image} style={styles.mountainImg} />
-								<Text style={styles.mountainTitle}>
+							<View style={styles.chatContainer}>
+								<Text style={styles.chatTitle}>
 									{item.item.name}
 								</Text>
 								<Icon
 									name={Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-forward"}
-									style={styles.mountainArrow}
+									style={styles.chatArrow}
 								/>
 							</View>
 						</TouchableOpacity>
-						)}
+					)}
 				/>
 			</ScrollView>
 		);
@@ -56,7 +64,7 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		textAlign: "center",
 	},
-	mountainContainer: {
+	chatContainer: {
 		paddingVertical: 10,
 		paddingHorizontal: 20,
 		backgroundColor: "#efefef",
@@ -68,21 +76,13 @@ const styles = StyleSheet.create({
 		borderTopColor: "#aaa",
 		borderBottomColor: "#aaa",
 	},
-	mountainImg: {
-		borderRadius: 40,
-		width: 80,
-		height: 80,
-		borderColor: "#aaa",
-		borderWidth: 1,
-		marginRight: 15,
-	},
-	mountainTitle: {
+	chatTitle: {
 		color: "#000",
 		fontSize: 22,
 		lineHeight: 28,
 		flexGrow: 2,
 	},
-	mountainArrow: {
+	chatArrow: {
 		color: "#000",
 		fontSize: 30,
 		marginBottom: -3,

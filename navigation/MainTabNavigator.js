@@ -5,6 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import MountainsScreen from '../screens/MountainsScreen';
+import ChatScreen from "../screens/ChatScreen";
 import SettingsScreen from '../screens/SettingsScreen';
 
 const HomeStack = createStackNavigator({
@@ -39,6 +40,20 @@ MountainsStack.navigationOptions = {
 	),
 };
 
+const ChatStack = createStackNavigator({
+	Chat: ChatScreen,
+});
+
+ChatStack.navigationOptions = {
+	tabBarLabel: "Chats",
+	tabBarIcon: ({ focused }) => {
+		<TabBarIcon
+			focused={focused}
+			name={Platform.OS === "ios" ? "ios-chatboxes" : "md-chatboxes"}
+		/>
+	},
+}
+
 const SettingsStack = createStackNavigator({
 	Settings: SettingsScreen,
 });
@@ -56,5 +71,6 @@ SettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
 	HomeStack,
 	MountainsStack,
+	ChatStack,
 	SettingsStack,
 });

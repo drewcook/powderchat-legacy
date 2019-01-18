@@ -1,7 +1,5 @@
 import * as firebase from 'firebase';
 import "firebase/firestore";
-//const admin = require("firebase-admin");
-//const functions = require("firebase-functions");
 
 // Initialize Firebase Realtime Database
 const firebaseConfig = {
@@ -14,13 +12,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Initialize Firebase Cloud Firestore
-//admin.initializeApp(functions.config().firebase);
 let db = firebase.firestore();
 let users = db.collection('users');
 
 // Listen for authentication state to change.
-firebase.auth().onAuthStateChanged((user) => {
-	if (user != null) {
+firebase.auth().onAuthStateChanged(user => {
+	// signed in
+	if (user) {
 		console.log('We are authenticated now!');
 		console.log(user);
 		// write user into users/ collection if record doesn't exist
@@ -30,11 +28,18 @@ firebase.auth().onAuthStateChanged((user) => {
 					users.doc(user.uid).set({
 						"name": user.displayName,
 						"createdAt": new Date(),
+						"lastLogin": new Date(),
 						"profilePic": user.photoURL,
 					});
+				} else {
+					users.doc(user.uid).update({"lastLogin": new Date()});
 				}
 			});
 		}).catch(err => console.log('Error getting documents', err));
+	}
+	// not signed in
+	else {
+
 	}
 
 	// Do other things
