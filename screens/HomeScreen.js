@@ -9,9 +9,7 @@ import {
 	View,
 } from 'react-native';
 import colors from "../constants/Colors";
-//import { AuthSession } from "expo";
-
-import {loginWithFacebook} from "../database/firebaseConfig";
+import Fire from "../database/firebaseConfig";
 
 export default class HomeScreen extends React.Component {
 	state = {
@@ -35,7 +33,7 @@ export default class HomeScreen extends React.Component {
 							Welcome to SlopeChat!
 						</Text>
 						{!this.state.userInfo ? (
-								<TouchableOpacity style={styles.logInBtn} onPress={() => loginWithFacebook()}>
+								<TouchableOpacity style={styles.logInBtn} onPress={Fire.shared.loginWithFacebook}>
 									<Text style={styles.logInBtnText}>Log In With Facebook</Text>
 								</TouchableOpacity>
 							) :
@@ -46,41 +44,6 @@ export default class HomeScreen extends React.Component {
 			</View>
 		);
 	}
-
-	/*_handlePressAsync = async () => {
-		let redirectUrl = AuthSession.getRedirectUrl();
-		let result = await AuthSession.startAsync({
-			authUrl:
-			`https://www.facebook.com/v2.8/dialog/oauth?response_type=token` +
-			`&client_id=${FB_APP_ID}` +
-			`&redirect_uri=${encodeURIComponent(redirectUrl)}`,
-		});
-		this.setState({ result });
-	};*/
-
-	/*_handleFBLogin = async () => {
-		try {
-			const {
-				type,
-				token,
-				expires,
-				permissions,
-				declinedPermissions,
-			} = await Expo.Facebook.logInWithReadPermissionsAsync(FB_APP_ID, {
-				permissions: ['public_profile'],
-			});
-			if (type === 'success') {
-				// Get the user's name using Facebook's Graph API
-				const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,picture.type(large)`);
-				const userInfo = await response.json();
-				this.setState({userInfo});
-			} else {
-				// type === 'cancel'
-			}
-		} catch ({ message }) {
-			alert(`Facebook Login Error: ${message}`);
-		}
-	}*/
 
 	_renderUserInfo = () => {
 		return (

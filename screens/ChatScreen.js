@@ -9,24 +9,49 @@ import {
 	View,
 } from "react-native";
 import Icon from '../components/Icon';
-
-const chats = [
-	{
-		name: "Purgatory",
-	},
-	{
-		name: "Wolf Creek",
-	},
-	{
-		name: "Keystone",
-	},
-]
+import { GiftedChat } from "react-native-gifted-chat";
+import Fire from "../database/firebaseConfig";
+import firebase from "firebase";
 
 export default class ChatScreen extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			messages: [],
+		};
+	}
+
+	static navigationOptions = {
+		title: "Chats",
+	};
+
+
+	componentDidMount() {
+		Fire.shared.on(message => {
+				this.setState(previousState => ({
+					messages: GiftedChat.append(previousState.messages, message),
+				}));
+				console.log(message)
+		});
+	}
+
+	componentWillUnmount() {
+		Fire.shared.off();
+	}
+
+	get user() {
+		// Return our name and our UID for GiftedChat to parse
+		const user = {
+			name: firebase.auth().currentUser.displayName || "Anonymous",
+			_id: Fire.shared.uid,
+			avatar: firebase.auth().currentUser.photoURL || null,
+		};
+		return user;
+	}
+
 	render() {
 		return (
-			<ScrollView style={styles.container}>
-				<Text style={styles.heading}>SlopeChats</Text>
+			/*<ScrollView style={styles.container}>
 				<FlatList
 					data={chats}
 					keyExtractor={(item, idx) => idx.toString()}
@@ -44,7 +69,14 @@ export default class ChatScreen extends React.Component {
 						</TouchableOpacity>
 					)}
 				/>
-			</ScrollView>
+			</ScrollView>*/
+
+				<GiftedChat
+					messages={this.state.messages}
+					onSend={Fire.shared.send}
+					user={this.user}
+				/>
+
 		);
 	}
 
@@ -56,14 +88,13 @@ export default class ChatScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingTop: 20,
 		backgroundColor: '#fff',
 	},
-	heading: {
+	/*heading: {
 		fontSize: 32,
 		marginBottom: 20,
 		textAlign: "center",
-	},
+	},*/
 	chatContainer: {
 		paddingVertical: 10,
 		paddingHorizontal: 20,

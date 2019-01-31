@@ -13,11 +13,13 @@ import Icon from '../components/Icon';
 import { mountains } from "../constants/mountains";
 
 export default class MountainsScreen extends React.Component {
+	static navigationOptions = {
+		title: "Mountains"
+	};
 
 	render() {
 		return (
 			<ScrollView style={styles.container}>
-				<Text style={styles.heading}>Mountains List</Text>
 				<FlatList
 					data={mountains}
 					keyExtractor={(item, idx) => idx.toString()}
@@ -48,14 +50,13 @@ export default class MountainsScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingTop: 20,
 		backgroundColor: '#fff',
 	},
-	heading: {
+	/*heading: {
 		fontSize: 32,
 		marginBottom: 20,
 		textAlign: "center",
-	},
+	},*/
 	mountainContainer: {
 		paddingVertical: 10,
 		paddingHorizontal: 20,

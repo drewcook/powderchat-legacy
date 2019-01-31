@@ -9,6 +9,9 @@ import {
 import colors from "../constants/Colors";
 
 export default class MountainDetailsScreen extends React.Component {
+	static navigationOptions = {
+		title: "Details",
+	};
 
 	render() {
 		const {navigation} = this.props;
@@ -49,6 +52,8 @@ const styles = StyleSheet.create({
 		height: 120,
 		borderRadius: 60,
 		marginBottom: 15,
+		borderWidth: 1,
+		borderColor: "#aaa",
 	},
 	title: {
 		textAlign: "center",
