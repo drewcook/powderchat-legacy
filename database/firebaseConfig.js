@@ -65,23 +65,23 @@ class Fire {
 
 	on = callback =>
 		this.ref
-			.orderBy("timestamp", "desc")
+			.orderBy("createdAt", "desc")
 			.limit(20)
 			.onSnapshot(snapshot => callback(this.parse(snapshot)));
 
 	parse = snapshot => {
 		let messages = [];
 		snapshot.forEach(doc => {
-			const { _id, timestamp, text, user } = doc.data();
+			const { _id, createdAt, text, user } = doc.data();
 			//console.log("VALUES", _id, timestamp, text, user);
 			messages.push({
 				_id,
-				timestamp,
+				createdAt: createdAt.toDate(),
 				text,
 				user,
 			});
 		});
-		console.log("PARSED MESSAGES")
+		console.log("PARSED MESSAGES", messages);
 		return messages;
 	}
 
@@ -104,7 +104,7 @@ class Fire {
 			const message = {
 				_id,
 				text,
-				timestamp: createdAt,
+				createdAt,
 				user,
 			};
 			// TODO: add to certain doc, based on what mountain chat is being sent from
