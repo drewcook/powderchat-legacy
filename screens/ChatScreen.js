@@ -27,10 +27,7 @@ export default class ChatScreen extends React.Component {
 
 
 	componentDidMount() {
-		Fire.shared.on(messages => {
-			console.log("SNAPSHOT UPDATED");
-			this.setState({messages});
-		});
+		Fire.shared.on(messages => this.setState({messages}));
 	}
 
 	componentWillUnmount() {

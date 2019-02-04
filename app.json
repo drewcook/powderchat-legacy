@@ -11,11 +11,11 @@
     "version": "1.0.0",
     "githubUrl": "https://github.com/drewcook/SlopeChat",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/bubble_logo_square.png",
     "splash": {
-      "image": "./assets/images/main_icon.png",
+      "image": "./assets/images/bubble_logo_md.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0d7095"
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

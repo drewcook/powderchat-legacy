@@ -8,28 +8,25 @@ import {
 	View,
 } from 'react-native';
 import colors from "../constants/Colors";
+import firebase from "firebase";
 
 export default class AuthLoadingScreen extends React.Component {
 	constructor(props) {
 		super(props);
-		this._bootstrapAsync();
 	}
 
-	// Fetch the token from storage then navigate to our appropriate place
-	_bootstrapAsync = async () => {
-		const userToken = await AsyncStorage.getItem('userToken');
-
-		// This will switch to the App screen or Auth screen and this loading
-		// screen will be unmounted and thrown away.
-		this.props.navigation.navigate(userToken ? 'App' : 'Auth');
-	};
+	componentDidMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			this.props.navigation.navigate(user ? 'Main' : 'Auth')
+		})
+	}
 
 	render() {
 		return (
 			<View style={styles.container}>
 				<ActivityIndicator/>
 				<Image
-					source={require('../assets/images/main_icon.png')}
+					source={require('../assets/images/bubble_logo_md.png')}
 					style={styles.loadingImage}
 				/>
 				<Text style={styles.loadingText}>Loading</Text>
@@ -41,19 +38,20 @@ export default class AuthLoadingScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: colors.primary,
+		backgroundColor: colors.ice,
+		alignItems: "center",
 	},
 	loadingImage: {
-		width: 200,
-		height: 160,
+		width: 150,
+		height: 182,
 		resizeMode: 'contain',
-		marginTop: 30,
-		marginLeft: -10,
+		marginTop: 170,
 	},
 	loadingText: {
 		fontSize: 30,
-		color: "#fff",
+		color: colors.primary,
 		lineHeight: 32,
 		textAlign: 'center',
+		marginTop: 30
 	},
 });

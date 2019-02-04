@@ -9,54 +9,40 @@ import {
 	View,
 } from 'react-native';
 import colors from "../constants/Colors";
-import Fire from "../database/firebaseConfig";
+import firebase from "firebase";
 
 export default class HomeScreen extends React.Component {
 	state = {
 		result: null,
-		userInfo: null,
+		user: firebase.auth().currentUser,
+	};
+
+	static navigationOptions = {
+		title: "Home",
 	};
 
 	render() {
+		const {user} = this.state;
 		return (
 			<View style={styles.container}>
 				<ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 					<View style={styles.welcomeContainer}>
 						<Image
-							source={require('../assets/images/main_icon.png')}
+							source={require('../assets/images/bubble_logo_md.png')}
 							style={styles.welcomeImage}
 						/>
 					</View>
-
 					<View style={styles.getStartedContainer}>
-						<Text style={styles.getStartedText}>
-							Welcome to SlopeChat!
-						</Text>
-						{!this.state.userInfo ? (
-								<TouchableOpacity style={styles.logInBtn} onPress={Fire.shared.loginWithFacebook}>
-									<Text style={styles.logInBtnText}>Log In With Facebook</Text>
-								</TouchableOpacity>
-							) :
-							(this._renderUserInfo())
-						}
+						<Image
+							source={{ uri: user.photoURL }}
+							style={styles.getStartedPhoto}
+						/>
+						<Text style={styles.getStartedText}>Hello, {user.displayName}!</Text>
 					</View>
 				</ScrollView>
 			</View>
 		);
 	}
-
-	_renderUserInfo = () => {
-		return (
-			<View style={{ aligntItems: "center" }}>
-				<Image
-					source={{ uri: this.state.userInfo.picture.data.url }}
-					style={{ width: 100, height: 100, borderRadius: 50 }}
-				/>
-				<Text style={{ fontSize: 20 }}>Hello, {this.state.userInfo.name}!</Text>
-				<Text>ID: {this.state.userInfo.id}</Text>
-			</View>
-		);
-	};
 }
 
 const styles = StyleSheet.create({
@@ -80,15 +66,19 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	welcomeImage: {
-		width: 200,
-		height: 160,
+		width: 100,
+		height: 80,
 		resizeMode: 'contain',
-		marginTop: 30,
-		marginLeft: -10,
 	},
 	getStartedContainer: {
 		alignItems: 'center',
 		marginHorizontal: 50,
+	},
+	getStartedPhoto: {
+		width: 160,
+		height: 160,
+		borderRadius: 80,
+		marginVertical: 30,
 	},
 	getStartedText: {
 		fontSize: 30,

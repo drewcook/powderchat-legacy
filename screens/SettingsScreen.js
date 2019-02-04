@@ -25,14 +25,12 @@ export default class SettingsScreen extends React.Component {
 	render() {
 		const {user} = this.state;
 		return (
-
-				<View style={styles.profileContainer}>
-					<Text>{user && user.displayName}</Text>
-					<TouchableOpacity style={styles.signOutBtn}>
-						<Text style={styles.signOutBtnText} onPress={this._signOut}>Sign Out</Text>
-					</TouchableOpacity>
-				</View>
-
+			<View style={styles.profileContainer}>
+				<Text>{user && user.displayName}</Text>
+				<TouchableOpacity style={styles.signOutBtn}>
+					<Text style={styles.signOutBtnText} onPress={this._signOut}>Sign Out</Text>
+				</TouchableOpacity>
+			</View>
 		);
 	}
 

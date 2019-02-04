@@ -5,6 +5,23 @@ class Fire {
 	constructor() {
 		this.init();
 		this.observeAuth();
+		this.currentUser = null;
+	}
+
+	get db() {
+		return firebase.firestore();
+	}
+
+	get ref() {
+		return this.db.collection('messages');
+	}
+
+	get uid() {
+		return (firebase.auth().currentUser || {}).uid;
+	}
+
+	get timestamp() {
+		return firebase.firestore.FieldValue.serverTimestamp();
 	}
 
 	// Initialize Firebase Realtime Database
@@ -30,7 +47,7 @@ class Fire {
 		// signed in
 		if (user) {
 			console.log('User is signed in and authenticated.');
-			//console.log(user);
+			this.currentUser = user;
 			// write user into users/ collection if record doesn't exist
 			users.get().then(snapshot => {
 				snapshot.forEach(doc => {
@@ -55,19 +72,13 @@ class Fire {
 		// Do other things
 	};
 
-	get db() {
-		return firebase.firestore();
-	}
-
-	get ref() {
-		return this.db.collection('messages');
-	}
-
 	on = callback =>
 		this.ref
 			.orderBy("createdAt", "desc")
 			.limit(20)
 			.onSnapshot(snapshot => callback(this.parse(snapshot)));
+
+	off = () => this.ref.off();
 
 	parse = snapshot => {
 		let messages = [];
@@ -81,24 +92,10 @@ class Fire {
 				user,
 			});
 		});
-		console.log("PARSED MESSAGES", messages);
 		return messages;
 	}
 
-	off() {
-		this.ref.off();
-	}
-
-	get uid() {
-		return (firebase.auth().currentUser || {}).uid;
-	}
-
-	get timestamp() {
-		return firebase.firestore.FieldValue.serverTimestamp();
-	}
-
 	send = messages => {
-		console.log("sending", messages);
 		for (let i = 0; i < messages.length; i++) {
 			const { _id, createdAt, text, user } = messages[i];
 			const message = {
