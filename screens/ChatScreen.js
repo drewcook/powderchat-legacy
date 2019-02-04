@@ -27,16 +27,20 @@ export default class ChatScreen extends React.Component {
 
 
 	componentDidMount() {
-		Fire.shared.on(message => {
-				this.setState(previousState => ({
-					messages: GiftedChat.append(previousState.messages, message),
-				}));
-				console.log(message)
+		Fire.shared.on(messages => {
+			console.log("SNAPSHOT UPDATED");
+			this.setState({messages});
 		});
 	}
 
 	componentWillUnmount() {
 		Fire.shared.off();
+	}
+
+	onSend = (messages = []) => {
+		this.setState(previousState => ({
+			messages: GiftedChat.append(previousState.messages, messages),
+		}));
 	}
 
 	get user() {
@@ -71,11 +75,11 @@ export default class ChatScreen extends React.Component {
 				/>
 			</ScrollView>*/
 
-				<GiftedChat
-					messages={this.state.messages}
-					onSend={Fire.shared.send}
-					user={this.user}
-				/>
+			<GiftedChat
+				messages={this.state.messages}
+				onSend={messages => Fire.shared.send(messages)}
+				user={this.user}
+			/>
 
 		);
 	}

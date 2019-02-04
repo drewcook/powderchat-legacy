@@ -65,17 +65,15 @@ class Fire {
 
 	on = callback =>
 		this.ref
+			.orderBy("timestamp", "desc")
 			.limit(20)
 			.onSnapshot(snapshot => callback(this.parse(snapshot)));
 
 	parse = snapshot => {
 		let messages = [];
 		snapshot.forEach(doc => {
-			console.log(doc.data())
-			const { timestamp: numberStamp, text, user } = doc.data();
-			const { key: _id } = doc.data();
-			const timestamp = new Date(numberStamp);
-
+			const { _id, timestamp, text, user } = doc.data();
+			//console.log("VALUES", _id, timestamp, text, user);
 			messages.push({
 				_id,
 				timestamp,
@@ -83,6 +81,7 @@ class Fire {
 				user,
 			});
 		});
+		console.log("PARSED MESSAGES")
 		return messages;
 	}
 
@@ -99,20 +98,19 @@ class Fire {
 	}
 
 	send = messages => {
+		console.log("sending", messages);
 		for (let i = 0; i < messages.length; i++) {
-			const { text, user } = messages[i];
+			const { _id, createdAt, text, user } = messages[i];
 			const message = {
-				_id: i,
+				_id,
 				text,
+				timestamp: createdAt,
 				user,
-				timestamp: this.timestamp,
 			};
-			this.append(message);
+			// TODO: add to certain doc, based on what mountain chat is being sent from
+			this.ref.doc().set(message, {merge: true});
 		}
 	};
-
-	append = message => this.ref.doc("Chat Uno").set(message, {merge: true});
-
 
 	// Facebook Authentication
 	loginWithFacebook = async () => {
