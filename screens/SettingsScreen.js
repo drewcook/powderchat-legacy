@@ -43,9 +43,6 @@ export default class SettingsScreen extends React.Component {
 					style={styles.profilePic}
 					/>
 					<Text style={styles.profileName}>{user.displayName}</Text>
-					<TouchableOpacity style={styles.signOutBtn}>
-						<Text style={styles.signOutBtnText} onPress={this._signOut}>Sign Out</Text>
-					</TouchableOpacity>
 				</View>
 				<View style={styles.settingRow}>
 					<Text style={styles.settingText}>Setting 1</Text>
@@ -87,6 +84,9 @@ export default class SettingsScreen extends React.Component {
 						value={settings.setting5}
 					/>
 				</View>
+				<TouchableOpacity style={styles.signOutBtn}>
+					<Text style={styles.signOutBtnText} onPress={this._signOut}>Sign Out</Text>
+				</TouchableOpacity>
 			</ScrollView>
 		);
 	}

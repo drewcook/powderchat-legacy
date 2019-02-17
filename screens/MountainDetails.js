@@ -7,6 +7,7 @@ import {
 	View,
 } from "react-native";
 import colors from "../constants/Colors";
+import mountainStore from "../database/mountainService";
 
 export default class MountainDetailsScreen extends React.Component {
 	static navigationOptions = {
@@ -19,13 +20,13 @@ export default class MountainDetailsScreen extends React.Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
-					<Image source={mountain.image} style={styles.image} />
+					<Image source={{uri:mountain.iconPath}} style={styles.image} />
 					<Text style={styles.title}>{mountain.name}</Text>
 					<Text style={styles.region}>{mountain.region}</Text>
 				</View>
 				<View style={styles.body}>
 					<TouchableOpacity style={styles.checkInBtn}>
-						<Text style={styles.checkInBtnText}>Check In</Text>
+						<Text style={styles.checkInBtnText} onPress={()=>mountainStore.checkIn(mountain.id)}>Check In</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

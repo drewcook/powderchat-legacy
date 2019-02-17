@@ -10,23 +10,35 @@ import {
 	View,
 } from 'react-native';
 import Icon from '../components/Icon';
-import { mountains } from "../constants/mountains";
+import mountainStore from "../database/mountainService";
 
 export default class MountainsScreen extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			mountains: null,
+		}
+	}
 	static navigationOptions = {
 		title: "Mountains"
 	};
 
+	componentDidMount() {
+		mountainStore.getAllMountains().then(mountains => this.setState({mountains}));
+	}
+
 	render() {
+		const {mountains} = this.state;
 		return (
 			<ScrollView style={styles.container}>
+				{mountains &&
 				<FlatList
 					data={mountains}
 					keyExtractor={(item, idx) => idx.toString()}
 					renderItem={(item, idx) => (
 						<TouchableOpacity onPress={() => this._onPress(item.item)}>
 							<View style={styles.mountainContainer}>
-								<Image source={item.item.image} style={styles.mountainImg} />
+								<Image source={{uri:item.item.iconPath}} width={50} height={50} style={styles.mountainImg} />
 								<Text style={styles.mountainTitle}>
 									{item.item.name}
 								</Text>
@@ -37,7 +49,7 @@ export default class MountainsScreen extends React.Component {
 							</View>
 						</TouchableOpacity>
 						)}
-				/>
+				/>}
 			</ScrollView>
 		);
 	}
