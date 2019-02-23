@@ -2,9 +2,13 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import { Provider } from "react-redux";
 
 // database setup
 require("./database/firebaseConfig");
+
+// redux setup
+import store from "./store/storeConfig";
 
 export default class App extends React.Component {
 	state = {
@@ -24,7 +28,9 @@ export default class App extends React.Component {
 			return (
 				<View style={styles.container}>
 					{Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-					<AppNavigator />
+					<Provider store={store}>
+						<AppNavigator />
+					</Provider>
 				</View>
 			);
 		}
@@ -41,6 +47,10 @@ export default class App extends React.Component {
 				// We include SpaceMono because we use it in HomeScreen.js. Feel free
 				// to remove this if you are not using it in your app
 				'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+				"fa-brands": require("./assets/fonts/fa-brands-400.ttf"),
+				"fa-light": require("./assets/fonts/fa-light-300.ttf"),
+				"fa-regular": require("./assets/fonts/fa-regular-400.ttf"),
+				"fa-solid": require("./assets/fonts/fa-solid-900.ttf"),
 			}),
 		]);
 	};
