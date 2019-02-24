@@ -8,32 +8,44 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import LoadingIcon from "../components/LoadingIcon";
 import Icon from '../components/Icon';
+import * as MountainActions from "../store/actions/mountainsActions";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-const Mountains = ({mountains}) => {
-	console.log(mountains);
-	return (
-		<FlatList
-			data={mountains}
-			keyExtractor={(item, idx) => idx.toString()}
-			renderItem={(item, idx) => (
-				<TouchableOpacity onPress={() => this._onPress(item.item)}>
-					<View style={styles.mountainContainer}>
-						<Image source={{uri: item.item.logo}} />
-						<Text style={styles.mountainTitle}>
-							{item.item.name}
-						</Text>
-						<Icon
-							name={Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-forward"}
-							style={styles.mountainArrow}
-						/>
-					</View>
-				</TouchableOpacity>
-			)}
-		/>
-);
-};
+class Mountains extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	componentDidMount() {
+		console.log(this.props);
+		this.props.getMountains();
+	}
+
+	render() {
+		return this.props.loading ? <LoadingIcon/> :
+			<FlatList
+				data={this.props.mountains}
+				keyExtractor={(item, idx) => idx.toString()}
+				renderItem={(item, idx) => (
+					<TouchableOpacity onPress={() => this._onPress(item.item)}>
+						<View style={styles.mountainContainer}>
+							<Image source={{uri: item.item.logo}}/>
+							<Text style={styles.mountainTitle}>
+								{item.item.name}
+							</Text>
+							<Icon
+								name={Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-forward"}
+								style={styles.mountainArrow}
+							/>
+						</View>
+					</TouchableOpacity>
+				)}
+			/>;
+	}
+}
 
 const styles = StyleSheet.create({
 	mountainContainer: {
@@ -70,7 +82,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-	mountains: state.mountains,
+	loading: state.mountains.loading,
+	mountains: state.mountains.list,
 });
 
-export default connect(mapStateToProps)(Mountains);
+const mapDispatchToProps = dispatch => bindActionCreators(MountainActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Mountains);

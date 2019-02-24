@@ -34,7 +34,7 @@ export default class HomeScreen extends React.Component {
 					</View>
 					<View style={styles.getStartedContainer}>
 						<Image
-							source={{ uri: user.photoURL }}
+							source={{uri: user.photoURL}}
 							style={styles.getStartedPhoto}
 						/>
 						<Text style={styles.getStartedText}>Hello, {user.displayName}!</Text>
