@@ -11,8 +11,13 @@ import {
 } from "react-native";
 import firebase from "firebase";
 import colors from "../constants/Colors";
+import userService from "../database/userService";
 
 export default class SettingsScreen extends React.Component {
+	static navigationOptions = {
+		title: "Settings",
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -28,8 +33,7 @@ export default class SettingsScreen extends React.Component {
 	}
 
 	componentDidMount() {
-		const user = firebase.auth().currentUser;
-		this.setState({user});
+		userService.getCurrentUser().then(user => this.setState({user}))
 	}
 
 	render() {
@@ -39,10 +43,13 @@ export default class SettingsScreen extends React.Component {
 			<ScrollView style={styles.settingsContainer}>
 				<View style={styles.profileContainer}>
 					<Image
-					source={{uri: user.photoURL}}
-					style={styles.profilePic}
+						source={{uri: user.profilePic}}
+						style={styles.profilePic}
 					/>
-					<Text style={styles.profileName}>{user.displayName}</Text>
+					<Text style={styles.profileName}>{user.name}</Text>
+					{user.currentMountain ?
+						<Text>Checked Into {user.currentMountain.name}</Text> :
+						<Text>Not Checked In Anywhere</Text>}
 				</View>
 				<View style={styles.settingRow}>
 					<Text style={styles.settingText}>Setting 1</Text>
@@ -91,11 +98,11 @@ export default class SettingsScreen extends React.Component {
 		);
 	}
 
-	_toggleSetting1 = val => this.setState({ settings: { ...this.state.settings, setting1: val}});
-	_toggleSetting2 = val => this.setState({ settings: { ...this.state.settings, setting2: val}});
-	_toggleSetting3 = val => this.setState({ settings: { ...this.state.settings, setting3: val}});
-	_toggleSetting4 = val => this.setState({ settings: { ...this.state.settings, setting4: val}});
-	_toggleSetting5 = val => this.setState({ settings: { ...this.state.settings, setting5: val}});
+	_toggleSetting1 = val => this.setState({settings: {...this.state.settings, setting1: val}});
+	_toggleSetting2 = val => this.setState({settings: {...this.state.settings, setting2: val}});
+	_toggleSetting3 = val => this.setState({settings: {...this.state.settings, setting3: val}});
+	_toggleSetting4 = val => this.setState({settings: {...this.state.settings, setting4: val}});
+	_toggleSetting5 = val => this.setState({settings: {...this.state.settings, setting5: val}});
 
 	_signOut = () => {
 		firebase.auth().signOut();
