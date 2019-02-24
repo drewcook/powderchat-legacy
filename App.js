@@ -5,7 +5,7 @@ import AppNavigator from './navigation/AppNavigator';
 import { Provider } from "react-redux";
 
 // database setup
-require("./database/firebaseConfig");
+//require("./database/firebaseConfig");
 
 // redux setup
 import store from "./store/storeConfig";
@@ -27,9 +27,9 @@ export default class App extends React.Component {
 		} else {
 			return (
 				<View style={styles.container}>
-					{Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+					{Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
 					<Provider store={store}>
-						<AppNavigator />
+						<AppNavigator/>
 					</Provider>
 				</View>
 			);
@@ -62,7 +62,7 @@ export default class App extends React.Component {
 	};
 
 	_handleFinishLoading = () => {
-		this.setState({ isLoadingComplete: true });
+		this.setState({isLoadingComplete: true});
 	};
 }
 

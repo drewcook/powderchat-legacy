@@ -8,6 +8,10 @@ import MountainsScreen from '../screens/MountainsScreen';
 import MountainDetailsScreen from "../screens/MountainDetails";
 import ChatScreen from "../screens/ChatScreen";
 import SettingsScreen from '../screens/SettingsScreen';
+import userService from "../database/userService";
+
+//let globalUser = "blank";
+//userService.getCurrentUser().then(user => globalUser = user);
 
 const HomeStack = createStackNavigator({
 	Home: HomeScreen,
@@ -15,7 +19,7 @@ const HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = {
 	tabBarLabel: 'Home',
-	tabBarIcon: ({ focused }) => (
+	tabBarIcon: ({focused}) => (
 		<TabBarIcon
 			focused={focused}
 			name={
@@ -39,7 +43,7 @@ const MountainsStack = createStackNavigator(
 
 MountainsStack.navigationOptions = {
 	tabBarLabel: 'Mountains',
-	tabBarIcon: ({ focused }) => (
+	tabBarIcon: ({focused}) => (
 		<TabBarIcon
 			focused={focused}
 			name={Platform.OS === 'ios' ? 'ios-snow' : 'md-snow'}
@@ -48,18 +52,18 @@ MountainsStack.navigationOptions = {
 };
 
 const ChatStack = createStackNavigator({
-	Chat: ChatScreen,
+	Chats: ChatScreen,
 });
 
 ChatStack.navigationOptions = {
-	tabBarLabel: "Chats",
-	tabBarIcon: ({ focused }) => {
+	tabBarLabel: 'Chats',
+	tabBarIcon: ({focused}) => (
 		<TabBarIcon
 			focused={focused}
-			name={Platform.OS === "ios" ? "ios-chatboxes" : "md-chatboxes"}
+			name={Platform.OS === 'ios' ? 'ios-chatbubbles' : 'md-chatbubbles'}
 		/>
-	},
-}
+	),
+};
 
 const SettingsStack = createStackNavigator({
 	Settings: SettingsScreen,
@@ -67,7 +71,7 @@ const SettingsStack = createStackNavigator({
 
 SettingsStack.navigationOptions = {
 	tabBarLabel: 'Settings',
-	tabBarIcon: ({ focused }) => (
+	tabBarIcon: ({focused}) => (
 		<TabBarIcon
 			focused={focused}
 			name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
