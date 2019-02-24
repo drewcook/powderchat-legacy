@@ -1,5 +1,6 @@
-import * as firebase from 'firebase';
+/*import firebase from 'firebase/app';
 import "firebase/firestore";
+import "firebase/auth";
 
 class Fire {
 	constructor() {
@@ -26,14 +27,16 @@ class Fire {
 
 	// Initialize Firebase Realtime Database
 	init = () => {
-		const firebaseConfig = {
+		var config = {
 			apiKey: "AIzaSyBHCu3VF2PsH0lJm9XzTTyKU5wnmRXbNZQ",
 			authDomain: "slopechat.firebaseapp.com",
-			databaseURL: "https://slopechat.firebaseio.com/",
+			databaseURL: "https://slopechat.firebaseio.com",
 			projectId: "slopechat",
-			storageBucket: "slopechat.appspot.com"
+			storageBucket: "slopechat.appspot.com",
+			messagingSenderId: "346314248816"
 		};
-		firebase.initializeApp(firebaseConfig);
+		firebase.initializeApp(config);
+		//firebase.firestore();
 	}
 
 	// Check if signed in or not
@@ -57,6 +60,7 @@ class Fire {
 							"createdAt": new Date(),
 							"lastLogin": new Date(),
 							"profilePic": user.photoURL,
+							"currentMountain": null,
 						});
 					} else {
 						users.doc(user.uid).update({"lastLogin": new Date()});
@@ -83,7 +87,7 @@ class Fire {
 	parse = snapshot => {
 		let messages = [];
 		snapshot.forEach(doc => {
-			const { _id, createdAt, text, user } = doc.data();
+			const {_id, createdAt, text, user} = doc.data();
 			//console.log("VALUES", _id, timestamp, text, user);
 			messages.push({
 				_id,
@@ -97,7 +101,7 @@ class Fire {
 
 	send = messages => {
 		for (let i = 0; i < messages.length; i++) {
-			const { _id, createdAt, text, user } = messages[i];
+			const {_id, createdAt, text, user} = messages[i];
 			const message = {
 				_id,
 				text,
@@ -111,12 +115,14 @@ class Fire {
 
 	// Facebook Authentication
 	loginWithFacebook = async () => {
-		const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
+		const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync(
 			"566780290461704",
-			{ permissions: [
-				'public_profile',
-				//'user_friends', <-- needs App Review from Facebook to use
-			] }
+			{
+				permissions: [
+					'public_profile',
+					//'user_friends', <-- needs App Review from Facebook to use
+				]
+			}
 		);
 
 		if (type === 'success') {
@@ -133,4 +139,4 @@ class Fire {
 }
 
 Fire.shared = new Fire();
-export default Fire;
+export default Fire;*/
