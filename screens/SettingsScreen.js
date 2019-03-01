@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-	FlatList,
 	Image,
 	ScrollView,
 	StyleSheet,
@@ -12,6 +11,7 @@ import {
 import firebase from "firebase";
 import colors from "../constants/Colors";
 import userService from "../database/userService";
+import Button from "../components/Button";
 
 export default class SettingsScreen extends React.Component {
 	static navigationOptions = {
@@ -91,9 +91,11 @@ export default class SettingsScreen extends React.Component {
 						value={settings.setting5}
 					/>
 				</View>
-				<TouchableOpacity style={styles.signOutBtn}>
-					<Text style={styles.signOutBtnText} onPress={this._signOut}>Sign Out</Text>
-				</TouchableOpacity>
+				<Button
+					bgColor={colors.primary}
+					title="Sign Out"
+					onPress={this._signOut}
+				/>
 			</ScrollView>
 		);
 	}
@@ -129,19 +131,6 @@ const styles = StyleSheet.create({
 		width: 100,
 		height: 100,
 		borderRadius: 50,
-	},
-	signOutBtn: {
-		backgroundColor: colors.primary,
-		paddingVertical: 15,
-		paddingHorizontal: 25,
-		marginTop: 20,
-		borderRadius: 4,
-		marginHorizontal: 30,
-	},
-	signOutBtnText: {
-		textAlign: "center",
-		color: "#fff",
-		fontSize: 24,
 	},
 	settingRow: {
 		flex: 1,

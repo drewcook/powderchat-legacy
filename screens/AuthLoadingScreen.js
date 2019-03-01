@@ -1,7 +1,6 @@
 import React from 'react';
 import {
 	ActivityIndicator,
-	AsyncStorage,
 	Image,
 	StyleSheet,
 	Text,
@@ -18,7 +17,7 @@ export default class AuthLoadingScreen extends React.Component {
 	componentDidMount() {
 		firebase.auth().onAuthStateChanged(user => {
 			this.props.navigation.navigate(user ? 'Main' : 'Auth')
-		})
+		});
 	}
 
 	render() {

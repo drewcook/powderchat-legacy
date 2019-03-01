@@ -3,9 +3,9 @@ import {
 	Image,
 	StyleSheet,
 	Text,
-	TouchableOpacity,
 	View,
 } from "react-native";
+import Button from "../components/Button";
 import colors from "../constants/Colors";
 import mountainService from "../database/mountainService";
 import userService from "../database/userService";
@@ -46,16 +46,18 @@ export default class MountainDetailsScreen extends React.Component {
 				</View>
 				<View style={styles.body}>
 					{!checkedIn ? (
-						<TouchableOpacity style={styles.checkInBtn}>
-							<Text style={styles.checkInBtnText}
-							      onPress={() => this._checkIn(mountain.id, mountain.name)}>Check In</Text>
-						</TouchableOpacity>
+						<Button
+							bgColor={colors.secondary}
+							title="Check In"
+							onPress={() => this._checkIn(mountain.id, mountain.name)}
+						/>
 					) : (
 						mountain.chatroomUsers.includes(user.id) ?
-							<TouchableOpacity style={styles.checkOutBtn}>
-								<Text style={styles.checkOutBtnText}
-								      onPress={() => this._checkOut(mountain.id, mountain.name)}>Check Out</Text>
-							</TouchableOpacity> :
+							<Button
+								bgColor={colors.secondary}
+								title="Check Out"
+								onPress={() => this._checkOut(mountain.id, mountain.name)}
+							/> :
 							<Text>Checked in elsewhere.</Text>
 					)}
 				</View>
@@ -108,29 +110,5 @@ const styles = StyleSheet.create({
 	},
 	body: {
 		padding: 30,
-	},
-	checkInBtn: {
-		backgroundColor: colors.secondary,
-		paddingVertical: 15,
-		paddingHorizontal: 25,
-		marginTop: 60,
-		borderRadius: 4,
-	},
-	checkInBtnText: {
-		textAlign: "center",
-		color: "rgba(0, 0, 0, 0.8)",
-		fontSize: 24,
-	},
-	checkOutBtn: {
-		backgroundColor: colors.primary,
-		paddingVertical: 15,
-		paddingHorizontal: 25,
-		marginTop: 60,
-		borderRadius: 4,
-	},
-	checkOutBtnText: {
-		textAlign: "center",
-		color: "#fff",
-		fontSize: 24,
-	},
+	}
 });

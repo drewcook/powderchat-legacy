@@ -1,13 +1,14 @@
 import React from 'react';
 import {
 	Image,
-	ScrollView,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import Button from "../components/Button";
 import colors from "../constants/Colors";
+import { loginWithFacebook } from "../database/authService";
 import Fire from "../database/firebaseConfig";
 
 export default class AuthScreen extends React.Component {
@@ -20,14 +21,21 @@ export default class AuthScreen extends React.Component {
 						style={styles.welcomeImage}
 					/>
 				</View>
-
 				<View style={styles.getStartedContainer}>
 					<Text style={styles.getStartedText}>
 						Welcome!
 					</Text>
-					<TouchableOpacity style={styles.logInBtn} onPress={Fire.shared.loginWithFacebook}>
-						<Text style={styles.logInBtnText}>Log In With Facebook</Text>
-					</TouchableOpacity>
+					<Button
+						bgColor={colors.primary}
+						title="Log In With Facebook"
+						onPress={loginWithFacebook}
+					/>
+					<Text style={styles.orText}>– or –</Text>
+					<Button
+						bgColor={colors.secondary}
+						title="Sign Up"
+						onPress={e => console.log(e)}
+					/>
 				</View>
 			</View>
 		);
@@ -59,16 +67,35 @@ const styles = StyleSheet.create({
 		color: "#000",
 		lineHeight: 32,
 		textAlign: 'center',
+		marginBottom: 40,
+	},
+	orText: {
+		fontSize: 22,
+		color: "#ccc",
+		lineHeight: 28,
+		textAlign: "center",
 	},
 	logInBtn: {
 		textAlign: 'center',
 		backgroundColor: colors.primary,
 		paddingVertical: 15,
 		paddingHorizontal: 25,
-		marginTop: 40,
+		marginVertical: 20,
 		borderRadius: 4,
 	},
 	logInBtnText: {
+		color: "#fff",
+		fontSize: 20,
+	},
+	signUpBtn: {
+		textAlign: 'center',
+		backgroundColor: colors.secondary,
+		paddingVertical: 15,
+		paddingHorizontal: 25,
+		marginVertical: 20,
+		borderRadius: 4,
+	},
+	signUpBtnText: {
 		color: "#fff",
 		fontSize: 20,
 	},
