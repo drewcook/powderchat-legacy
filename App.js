@@ -4,11 +4,20 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { Provider } from "react-redux";
 
-// database setup
-//require("./database/firebaseConfig");
 
-// redux setup
+// database setup using firestore
+// integrated with redux
 import store from "./store/storeConfig";
+import firebase from "firebase";
+import fbConfig from "./database/fbConfig";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { createFirestoreInstance } from "redux-firestore";
+const rrfProps = {
+	firebase,
+	config: fbConfig,
+	dispatch: store.dispatch,
+	createFirestoreInstance
+}
 
 export default class App extends React.Component {
 	state = {
@@ -29,7 +38,9 @@ export default class App extends React.Component {
 				<View style={styles.container}>
 					{Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
 					<Provider store={store}>
-						<AppNavigator/>
+						<ReactReduxFirebaseProvider {...rrfProps}>
+							<AppNavigator/>
+						</ReactReduxFirebaseProvider>
 					</Provider>
 				</View>
 			);

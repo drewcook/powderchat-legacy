@@ -10,7 +10,7 @@ const mountainsReducer = (state = initialStore.mountains, action) => {
 		case "GET_MOUNTAINS_SUCCESS":
 			return {
 				...state,
-				//loading: false,
+				loading: false,
 				list: action.payload,
 			};
 		case "GET_MOUNTAINS_FAIL":

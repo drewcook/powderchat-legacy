@@ -16,21 +16,15 @@ export default class MountainsScreen extends React.Component {
 
 	render() {
 		return (
-			<ScrollView style={styles.container}>
-				<Mountains/>
+			<ScrollView style={styles.container} contentContainerStyle={{flexGrow: 1}}>
+				<Mountains {...this.props} />
 			</ScrollView>
 		);
-	}
-
-	_onPress = (mountain) => {
-		console.log(mountain);
-		this.props.navigation.navigate("Details", {mountain});
 	}
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
 		backgroundColor: '#fff',
 	},
 });

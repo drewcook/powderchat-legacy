@@ -11,8 +11,9 @@ import {
 import LoadingIcon from "../components/LoadingIcon";
 import Icon from '../components/Icon';
 import * as MountainActions from "../store/actions/mountainsActions";
-import { bindActionCreators } from "redux";
+import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
 
 class Mountains extends React.Component {
 	constructor(props) {
@@ -20,8 +21,7 @@ class Mountains extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props);
-		this.props.getMountains();
+		//this.props.getMountains();
 	}
 
 	render() {
@@ -44,6 +44,10 @@ class Mountains extends React.Component {
 					</TouchableOpacity>
 				)}
 			/>;
+	}
+
+	_onPress = (mountain) => {
+		this.props.navigation.navigate("Details", {mountain});
 	}
 }
 
@@ -88,4 +92,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(MountainActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Mountains);
+export default compose(
+	firestoreConnect(['mountains']),
+	connect(mapStateToProps, mapDispatchToProps),
+)(Mountains);

@@ -1,13 +1,12 @@
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-
 import initialStore from "./initialStore";
 
 // DB
-import fbConfig from "../database/fbConfig";
-import { reduxFirestore, getFirestore } from "redux-firestore";
-import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
+//import fbConfig from "../database/fbConfig";
+import { getFirebase } from "react-redux-firebase";
+import { getFirestore, firestoreReducer } from "redux-firestore";
 
 // Reducers
 import authReducer from "./reducers/authReducer";
@@ -18,6 +17,7 @@ const rootReducer = combineReducers({
 	auth: authReducer,
 	mountains: mountainsReducer,
 	user: userReducer,
+	firestore: firestoreReducer,
 });
 
 // Middleware
@@ -28,8 +28,6 @@ const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVT
 const enhancer = compose(
 	middleware,
 	reduxDevtools,
-	reduxFirestore(fbConfig),
-	reactReduxFirebase(fbConfig)
 );
 
 // Store
