@@ -13,7 +13,7 @@ import Icon from '../components/Icon';
 import * as MountainActions from "../store/actions/mountainsActions";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
+import { firestoreConnect, isLoaded, isEmpty } from "react-redux-firebase";
 
 class Mountains extends React.Component {
 	constructor(props) {
@@ -25,14 +25,15 @@ class Mountains extends React.Component {
 	}
 
 	render() {
-		return this.props.loading ? <LoadingIcon/> :
+		return !isLoaded(this.props.mountains) ? <LoadingIcon/> :
+			isEmpty(this.props.mountains) ? <Text>Mountains List Is Empty</Text> :
 			<FlatList
 				data={this.props.mountains}
 				keyExtractor={(item, idx) => idx.toString()}
 				renderItem={(item, idx) => (
 					<TouchableOpacity onPress={() => this._onPress(item.item)}>
 						<View style={styles.mountainContainer}>
-							<Image source={{uri: item.item.logo}}/>
+							<Image source={{uri: "/assets/images/mountains/arapahoe_basin.jpg"}}/>
 							<Text style={styles.mountainTitle}>
 								{item.item.name}
 							</Text>
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
 	loading: state.mountains.loading,
-	mountains: state.mountains.list,
+	mountains: state.firestore.ordered.mountains,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(MountainActions, dispatch);

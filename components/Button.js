@@ -17,7 +17,7 @@ const styles = (bgColor) => ({
 		paddingVertical: 15,
 		paddingHorizontal: 25,
 		marginVertical: 20,
-		marginHorizontal: 10,
+		//marginHorizontal: 10,
 		borderRadius: 4,
 	},
 	btnText: {
