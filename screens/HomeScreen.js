@@ -1,8 +1,7 @@
 import React from 'react';
 import {
 	Image,
-	Platform,
-	ScrollView,
+	ImageBackground,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
@@ -15,90 +14,72 @@ import LoadingIcon from "../components/LoadingIcon";
 class HomeScreen extends React.Component {
 	static navigationOptions = {
 		title: "Home",
+		header: null,
 	};
 
 	render() {
 		const user = this.props.auth;
-		return user.uid ?
-			<View style={styles.container}>
-				<ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-					<View style={styles.welcomeContainer}>
+		return !user.uid ? <LoadingIcon/> :
+			<ImageBackground source={require('../assets/images/powder_bg.jpg')} style={styles.bgImg}>
+				<View style={styles.container}>
+					<View style={styles.logoContainer}>
 						<Image
 							source={require('../assets/images/bubble_logo_md.png')}
-							style={styles.welcomeImage}
+							style={styles.logo}
 						/>
 					</View>
-					<View style={styles.getStartedContainer}>
+					<View style={styles.welcomeContainer}>
 						{user.photoURL ?
 							<Image
 								source={{uri: user.photoURL}}
-								style={styles.getStartedPhoto}
+								style={styles.welcomePhoto}
 							/> :
 							<Image
 								source={require("../assets/images/default_user.png")}
-								style={styles.getStartedPhoto}
+								style={styles.welcomePhoto}
 							/>
 						}
-						<Text style={styles.getStartedText}>Hello, {user.displayName || user.email}!</Text>
+						<Text style={styles.welcomeText}>Hello, {user.displayName || user.email}!</Text>
 					</View>
-				</ScrollView>
-			</View> :
-			<LoadingIcon/>;
+				</View>
+			</ImageBackground>;
 	}
 }
 
 const styles = StyleSheet.create({
+	bgImg: {
+		width: "100%",
+		height: "100%",
+	},
 	container: {
 		flex: 1,
-		backgroundColor: colors.primary,
+		paddingTop: 100,
 	},
-	developmentModeText: {
-		marginBottom: 20,
-		color: 'rgba(0,0,0,0.4)',
-		fontSize: 14,
-		lineHeight: 19,
-		textAlign: 'center',
-	},
-	contentContainer: {
-		paddingTop: 30,
-	},
-	welcomeContainer: {
+	logoContainer: {
 		alignItems: 'center',
 		marginTop: 10,
 		marginBottom: 20,
 	},
-	welcomeImage: {
+	logo: {
 		width: 100,
 		height: 80,
 		resizeMode: 'contain',
 	},
-	getStartedContainer: {
+	welcomeContainer: {
 		alignItems: 'center',
 		marginHorizontal: 50,
 	},
-	getStartedPhoto: {
+	welcomePhoto: {
 		width: 160,
 		height: 160,
 		borderRadius: 80,
 		marginVertical: 30,
 	},
-	getStartedText: {
+	welcomeText: {
 		fontSize: 30,
 		color: "#fff",
 		lineHeight: 32,
 		textAlign: 'center',
-	},
-	logInBtn: {
-		textAlign: 'center',
-		backgroundColor: colors.ice,
-		paddingVertical: 15,
-		paddingHorizontal: 25,
-		marginTop: 60,
-		borderRadius: 4,
-	},
-	logInBtnText: {
-		color: "rgba(0, 0, 0, 0.8)",
-		fontSize: 20,
 	},
 });
 
