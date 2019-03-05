@@ -40,7 +40,7 @@ class SettingsScreen extends React.Component {
 		const user = this.props.auth;
 		const {settings} = this.state;
 		return (
-			user &&
+			user.uid &&
 			<ScrollView style={styles.settingsContainer}>
 				<View style={styles.profileContainer}>
 					{user.photoURL ?
@@ -49,7 +49,7 @@ class SettingsScreen extends React.Component {
 							style={styles.profilePic}
 						/> :
 						<Image
-							source={require("../assets/images/bubble_logo_md.png")}
+							source={require("../assets/images/default_user.png")}
 							style={styles.profilePic}
 						/>
 					}

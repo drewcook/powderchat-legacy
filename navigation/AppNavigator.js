@@ -8,8 +8,18 @@ import MainTabNavigator from './MainTabNavigator';
 
 const AuthStack = createStackNavigator(
 	{
-		Auth: AuthScreen,
-		SignUp: SignUpScreen
+		Auth: {
+			screen: AuthScreen,
+			navigationOptions: {
+				header: null,
+			}
+		},
+		SignUp: {
+			screen: SignUpScreen,
+			navigationOptions: {
+				title: "Sign Up",
+			}
+		}
 	},
 	{
 		initialRouteName: "Auth",

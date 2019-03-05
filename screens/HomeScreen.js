@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import colors from "../constants/Colors";
 import { connect } from "react-redux";
+import LoadingIcon from "../components/LoadingIcon";
 
 class HomeScreen extends React.Component {
 	static navigationOptions = {
@@ -18,7 +19,7 @@ class HomeScreen extends React.Component {
 
 	render() {
 		const user = this.props.auth;
-		return user && (
+		return user.uid ?
 			<View style={styles.container}>
 				<ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 					<View style={styles.welcomeContainer}>
@@ -34,15 +35,15 @@ class HomeScreen extends React.Component {
 								style={styles.getStartedPhoto}
 							/> :
 							<Image
-								source={require("../assets/images/bubble_logo_md.png")}
+								source={require("../assets/images/default_user.png")}
 								style={styles.getStartedPhoto}
 							/>
 						}
 						<Text style={styles.getStartedText}>Hello, {user.displayName || user.email}!</Text>
 					</View>
 				</ScrollView>
-			</View>
-		);
+			</View> :
+			<LoadingIcon/>;
 	}
 }
 

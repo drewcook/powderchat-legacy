@@ -21,10 +21,6 @@ class SignUpScreen extends React.Component {
 		};
 	}
 
-	static navigationOptions = {
-		title: "Sign Up",
-	};
-
 	render() {
 		return (
 			<ImageBackground source={require('../assets/images/auth_bg2.jpg')} style={styles.bgImg}>
