@@ -1,12 +1,15 @@
 import React from "react";
 import {
+	Image,
 	ImageBackground,
 	Text,
 	TextInput,
 	StyleSheet,
 	View,
 } from "react-native";
+import {ImagePicker, Permissions} from "expo";
 import Button from "../components/Button";
+import colors from "../constants/Colors";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as AuthActions from "../store/actions/authActions";
@@ -18,20 +21,23 @@ class SignUpScreen extends React.Component {
 		this.state = {
 			email: "",
 			password: "",
+			username: "",
+			photo: null,
 		};
 	}
 
 	render() {
+		const {email, password, username, photo} = this.state;
 		return (
 			<ImageBackground source={require('../assets/images/auth_bg2.jpg')} style={styles.bgImg}>
 				<View style={styles.container}>
 					<Text style={styles.text}>It's easy to sign up! Just use a valid email address with a unique
-						password and you'll be ready to go.</Text>
+						password and you'll be ready to go. We'd also need a name and optional photo to display for other riders.</Text>
 					<View style={styles.fieldContainer}>
 						<TextInput
 							style={styles.textField}
 							onChangeText={text => this.setState({email: text})}
-							value={this.state.email}
+							value={email}
 							placeholder="Email"
 						/>
 					</View>
@@ -40,8 +46,28 @@ class SignUpScreen extends React.Component {
 							style={styles.textField}
 							onChangeText={text => this.setState({password: text})}
 							secureTextEntry={true}
-							value={this.state.password}
+							value={password}
 							placeholder="Password"
+						/>
+					</View>
+					<View style={styles.fieldContainer}>
+						<TextInput
+							style={styles.textField}
+							onChangeText={text => this.setState({username: text})}
+							value={username}
+							placeholder="Name"
+						/>
+					</View>
+					<View style={styles.fieldContainerImage}>
+						<Button
+							bgColor={colors.primary}
+							title="Choose Photo"
+							onPress={this._pickImage}
+							btnStyle={{flexGrow: 1}}
+						/>
+						<Image
+							source={photo ? {uri: photo} : require("../assets/images/default_user.png")}
+							style={styles.signUpPhoto}
 						/>
 					</View>
 					<Button
@@ -51,6 +77,25 @@ class SignUpScreen extends React.Component {
 				</View>
 			</ImageBackground>
 		);
+	}
+
+	_pickImage = async () => {
+		const {status, permissions} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+		console.log(permissions);
+		if (status === "granted") {
+			let result = await ImagePicker.launchImageLibraryAsync({
+				allowsEditing: true,
+				aspect: [1,1],
+			});
+
+			console.log(result);
+
+			if (!result.cancelled) {
+				this.setState({photo: result.uri})
+			}
+		} else {
+			throw new Error('Camera permission not granted');
+		}
 	}
 }
 
@@ -74,6 +119,13 @@ const styles = {
 		marginVertical: 10,
 		alignSelf: "stretch",
 	},
+	fieldContainerImage: {
+		marginTop: 10,
+		marginBottom: 50,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
 	label: {
 		marginBottom: 5,
 	},
@@ -84,6 +136,12 @@ const styles = {
 		borderRadius: 4,
 		backgroundColor: "rgba(255, 255, 255, 0.8)",
 	},
+	signUpPhoto: {
+		width: 120,
+		height: 120,
+		borderRadius: 60,
+		marginLeft: 15
+	}
 };
 
 const mapStateToProps = state => ({});
