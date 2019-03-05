@@ -7,8 +7,12 @@ import {
 	View,
 } from "react-native";
 import Button from "../components/Button";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as AuthActions from "../store/actions/authActions";
+import { withFirebase } from "react-redux-firebase";
 
-export default class SignUpScreen extends React.Component {
+class SignUpScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -45,7 +49,7 @@ export default class SignUpScreen extends React.Component {
 					</View>
 					<Button
 						title="Create Account"
-						onPress={(e) => console.log(this.state)}
+						onPress={() => this.props.createAccount(this.state, this.props.firebase.createUser)}
 					/>
 				</View>
 			</ImageBackground>
@@ -84,3 +88,10 @@ const styles = {
 		backgroundColor: "rgba(255, 255, 255, 0.8)",
 	},
 };
+
+const mapStateToProps = state => ({
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(AuthActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(withFirebase(SignUpScreen));

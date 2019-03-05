@@ -5,7 +5,7 @@ import initialStore from "./initialStore";
 
 // DB
 //import fbConfig from "../database/fbConfig";
-import { getFirebase } from "react-redux-firebase";
+import { getFirebase, firebaseReducer } from "react-redux-firebase";
 import { getFirestore, firestoreReducer } from "redux-firestore";
 
 // Reducers
@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
 	mountains: mountainsReducer,
 	user: userReducer,
 	firestore: firestoreReducer,
+	firebase: firebaseReducer,
 });
 
 // Middleware

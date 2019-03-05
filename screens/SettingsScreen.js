@@ -8,12 +8,13 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import firebase from "firebase";
 import colors from "../constants/Colors";
 import userService from "../database/userService";
 import Button from "../components/Button";
+import {connect} from "react-redux";
+import {withFirebase} from "react-redux-firebase";
 
-export default class SettingsScreen extends React.Component {
+class SettingsScreen extends React.Component {
 	static navigationOptions = {
 		title: "Settings",
 	};
@@ -21,7 +22,6 @@ export default class SettingsScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			user: null,
 			settings: {
 				setting1: true,
 				setting2: true,
@@ -33,20 +33,27 @@ export default class SettingsScreen extends React.Component {
 	}
 
 	componentDidMount() {
-		userService.getCurrentUser().then(user => this.setState({user}))
+		//userService.getCurrentUser().then(user => this.setState({user}))
 	}
 
 	render() {
-		const {user, settings} = this.state;
+		const user = this.props.auth;
+		const {settings} = this.state;
 		return (
 			user &&
 			<ScrollView style={styles.settingsContainer}>
 				<View style={styles.profileContainer}>
-					<Image
-						source={{uri: user.profilePic}}
-						style={styles.profilePic}
-					/>
-					<Text style={styles.profileName}>{user.name}</Text>
+					{user.photoURL ?
+						<Image
+							source={{uri: user.photoURL}}
+							style={styles.profilePic}
+						/> :
+						<Image
+							source={require("../assets/images/bubble_logo_md.png")}
+							style={styles.profilePic}
+						/>
+					}
+					<Text style={styles.profileName}>{user.displayName || user.email}</Text>
 					{user.currentMountain ?
 						<Text>Checked Into {user.currentMountain.name}</Text> :
 						<Text>Not Checked In Anywhere</Text>}
@@ -94,7 +101,7 @@ export default class SettingsScreen extends React.Component {
 				<Button
 					bgColor={colors.primary}
 					title="Sign Out"
-					onPress={this._signOut}
+					onPress={()=> this.props.firebase.logout()}
 				/>
 			</ScrollView>
 		);
@@ -105,10 +112,6 @@ export default class SettingsScreen extends React.Component {
 	_toggleSetting3 = val => this.setState({settings: {...this.state.settings, setting3: val}});
 	_toggleSetting4 = val => this.setState({settings: {...this.state.settings, setting4: val}});
 	_toggleSetting5 = val => this.setState({settings: {...this.state.settings, setting5: val}});
-
-	_signOut = () => {
-		firebase.auth().signOut();
-	}
 }
 
 const styles = StyleSheet.create({
@@ -147,3 +150,10 @@ const styles = StyleSheet.create({
 	},
 	settingSwitch: {},
 });
+
+const mapStateToProps = state => ({
+	auth: state.firebase.auth,
+	profile: state.firebase.profile
+});
+
+export default connect(mapStateToProps, null)(withFirebase(SettingsScreen));

@@ -11,9 +11,14 @@ import {
 import Button from "../components/Button";
 import colors from "../constants/Colors";
 import { loginWithFacebook } from "../database/authService";
-import Fire from "../database/firebaseConfig";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as AuthActions from "../store/actions/authActions";
+import { withFirebase } from "react-redux-firebase";
 
-export default class AuthScreen extends React.Component {
+//import Fire from "../database/firebaseConfig";
+
+class AuthScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -55,6 +60,7 @@ export default class AuthScreen extends React.Component {
 								placeholder="Password"
 							/>
 						</View>
+						{this.props.authError && <Text style={styles.errorMsg}>{this.props.authError}</Text>}
 						<Text style={styles.centerText}>– or –</Text>
 						<Button
 							bgColor={colors.primary}
@@ -69,7 +75,7 @@ export default class AuthScreen extends React.Component {
 						</TouchableOpacity>
 						<Button
 							title="Sign In"
-							onPress={e => console.log(this.state)}
+							onPress={() => this.props.signIn(this.state, this.props.firebase.login)}
 						/>
 					</View>
 				</View>
@@ -119,6 +125,11 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		textAlign: "center",
 	},
+	errorMsg: {
+		color: "red",
+		marginVertical: 2,
+		fontSize: 15,
+	},
 	signUpText: {
 		color: "#fff",
 		textAlign: "center",
@@ -136,3 +147,11 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 });
+
+const mapStateToProps = state => ({
+	authError: state.auth.authError,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(AuthActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withFirebase(AuthScreen));

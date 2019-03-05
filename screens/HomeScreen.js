@@ -9,21 +9,16 @@ import {
 	View,
 } from 'react-native';
 import colors from "../constants/Colors";
-import firebase from "firebase";
+import {connect} from "react-redux";
 
-export default class HomeScreen extends React.Component {
-	state = {
-		result: null,
-		user: firebase.auth().currentUser,
-	};
-
+class HomeScreen extends React.Component {
 	static navigationOptions = {
 		title: "Home",
 	};
 
 	render() {
-		const {user} = this.state;
-		return (
+		const user = this.props.auth;
+		return user && (
 			<View style={styles.container}>
 				<ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 					<View style={styles.welcomeContainer}>
@@ -33,11 +28,17 @@ export default class HomeScreen extends React.Component {
 						/>
 					</View>
 					<View style={styles.getStartedContainer}>
-						<Image
-							source={{uri: user.photoURL}}
-							style={styles.getStartedPhoto}
-						/>
-						<Text style={styles.getStartedText}>Hello, {user.displayName}!</Text>
+						{user.photoURL ?
+							<Image
+								source={{uri: user.photoURL}}
+								style={styles.getStartedPhoto}
+							/> :
+							<Image
+								source={require("../assets/images/bubble_logo_md.png")}
+								style={styles.getStartedPhoto}
+							/>
+						}
+						<Text style={styles.getStartedText}>Hello, {user.displayName || user.email}!</Text>
 					</View>
 				</ScrollView>
 			</View>
@@ -99,3 +100,10 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 });
+
+const mapStateToProps = state => ({
+	auth: state.firebase.auth,
+	profile: state.firebase.profile
+});
+
+export default connect(mapStateToProps, null)(HomeScreen);
