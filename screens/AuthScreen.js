@@ -1,8 +1,10 @@
 import React from 'react';
 import {
 	Image,
+	ImageBackground,
 	StyleSheet,
 	Text,
+	TextInput,
 	TouchableOpacity,
 	View,
 } from 'react-native';
@@ -12,80 +14,114 @@ import { loginWithFacebook } from "../database/authService";
 import Fire from "../database/firebaseConfig";
 
 export default class AuthScreen extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			email: "",
+			password: "",
+		};
+	}
+
+	static navigationOptions = {
+		header: null
+	}
+
 	render() {
 		return (
-			<View style={styles.container}>
-				<View style={styles.welcomeContainer}>
-					<Image
-						source={require('../assets/images/main_logo_md.png')}
-						style={styles.welcomeImage}
-					/>
+			<ImageBackground source={require('../assets/images/auth_bg1.jpg')} style={styles.bgImg}>
+				<View style={styles.container}>
+					<View style={styles.logoContainer}>
+						<Image
+							source={require('../assets/images/main_logo_md.png')}
+							style={styles.logo}
+						/>
+					</View>
+					<View style={styles.loginContainer}>
+						<Text style={styles.centerText}>Login</Text>
+						<View style={styles.fieldContainer}>
+							<TextInput
+								style={styles.textField}
+								onChangeText={text => this.setState({email: text})}
+								value={this.state.email}
+								placeholder="Email"
+							/>
+						</View>
+						<View style={styles.fieldContainer}>
+							<TextInput
+								style={styles.textField}
+								onChangeText={text => this.setState({password: text})}
+								secureTextEntry={true}
+								value={this.state.password}
+								placeholder="Password"
+							/>
+						</View>
+						<Text style={styles.centerText}>– or –</Text>
+						<Button
+							bgColor={colors.primary}
+							title="Login With Facebook"
+							onPress={loginWithFacebook}
+						/>
+						<Text style={{marginVertical: 40}}></Text>
+						<TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")}>
+							<Text style={styles.signUpText}>
+								Don't have an account? <Text style={{textDecorationLine: "underline"}}>Sign up here</Text>.
+							</Text>
+						</TouchableOpacity>
+						<Button
+							title="Sign In"
+							onPress={e => console.log(this.state)}
+						/>
+					</View>
 				</View>
-				<View style={styles.getStartedContainer}>
-					<Text style={styles.getStartedText}>
-						Welcome!
-					</Text>
-					<Button
-						bgColor={colors.primary}
-						title="Log In With Facebook"
-						onPress={loginWithFacebook}
-					/>
-					<Text style={styles.orText}>– or –</Text>
-					<Button
-						bgColor={colors.secondary}
-						title="Sign Up"
-						onPress={e => console.log(e)}
-					/>
-				</View>
-			</View>
+			</ImageBackground>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
+	bgImg: {
+		width: "100%",
+		height: "100%",
+	},
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
 	},
-	welcomeContainer: {
+	logoContainer: {
 		alignItems: 'center',
-		marginTop: 70,
-		marginBottom: 20,
+		marginTop: 60,
 	},
-	welcomeImage: {
-		width: 250,
-		height: 305,
+	logo: {
+		width: 150,
+		height: 185,
 		resizeMode: 'contain',
-		marginVertical: 30,
+		marginVertical: 40,
 	},
-	getStartedContainer: {
-		alignItems: 'center',
+	loginContainer: {
 		marginHorizontal: 50,
 	},
-	getStartedText: {
-		fontSize: 30,
-		color: "#000",
-		lineHeight: 32,
-		textAlign: 'center',
-		marginBottom: 40,
+	fieldContainer: {
+		marginVertical: 10,
+		alignSelf: "stretch",
 	},
-	orText: {
+	label: {
+		marginBottom: 5,
+	},
+	textField: {
+		fontSize: 20,
+		paddingHorizontal: 12,
+		height: 50,
+		borderRadius: 4,
+		backgroundColor: "rgba(255, 255, 255, 0.8)",
+	},
+	centerText: {
 		fontSize: 22,
-		color: "#ccc",
-		lineHeight: 28,
+		color: "#fff",
+		marginTop: 10,
 		textAlign: "center",
 	},
-	logInBtn: {
-		textAlign: 'center',
-		backgroundColor: colors.primary,
-		paddingVertical: 15,
-		paddingHorizontal: 25,
-		marginVertical: 20,
-		borderRadius: 4,
-	},
-	logInBtnText: {
+	signUpText: {
 		color: "#fff",
-		fontSize: 20,
+		textAlign: "center",
 	},
 	signUpBtn: {
 		textAlign: 'center',

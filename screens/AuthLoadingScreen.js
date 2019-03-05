@@ -16,7 +16,7 @@ export default class AuthLoadingScreen extends React.Component {
 
 	componentDidMount() {
 		firebase.auth().onAuthStateChanged(user => {
-			this.props.navigation.navigate(user ? 'Main' : 'Auth')
+			this.props.navigation.navigate(user ? "Main" : "Auth")
 		});
 	}
 
@@ -25,7 +25,7 @@ export default class AuthLoadingScreen extends React.Component {
 			<View style={styles.container}>
 				<ActivityIndicator/>
 				<Image
-					source={require('../assets/images/bubble_logo_md.png')}
+					source={require("../assets/images/bubble_logo_md.png")}
 					style={styles.loadingImage}
 				/>
 				<Text style={styles.loadingText}>Loading</Text>
@@ -43,14 +43,14 @@ const styles = StyleSheet.create({
 	loadingImage: {
 		width: 150,
 		height: 182,
-		resizeMode: 'contain',
+		resizeMode: "contain",
 		marginTop: 170,
 	},
 	loadingText: {
 		fontSize: 30,
 		color: colors.primary,
 		lineHeight: 32,
-		textAlign: 'center',
+		textAlign: "center",
 		marginTop: 30
 	},
 });
