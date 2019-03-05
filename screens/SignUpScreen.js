@@ -107,12 +107,12 @@ const styles = {
 	container: {
 		flex: 1,
 		paddingHorizontal: 20,
-		paddingTop: 150,
+		paddingTop: 100,
 	},
 	text: {
 		color: "#fff",
 		fontSize: 18,
-		marginBottom: 10,
+		marginBottom: 30,
 		textAlign: "center",
 	},
 	fieldContainer: {
