@@ -12,6 +12,7 @@ import firebase from "firebase";
 import fbConfig from "./database/fbConfig";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { createFirestoreInstance } from "redux-firestore";
+
 const rrfProps = {
 	firebase,
 	config: fbConfig,

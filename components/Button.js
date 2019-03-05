@@ -22,7 +22,8 @@ const styles = (bgColor) => ({
 	},
 	btnText: {
 		color: "rgba(255, 255, 255, 0.95)",
-		fontSize: 22,
+		fontSize: 18,
 		textAlign: "center",
+		textTransform: "uppercase",
 	},
 });

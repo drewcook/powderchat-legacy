@@ -11,8 +11,8 @@ import {
 import Button from "../components/Button";
 import colors from "../constants/Colors";
 import { loginWithFacebook } from "../database/authService";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import * as AuthActions from "../store/actions/authActions";
 import { withFirebase } from "react-redux-firebase";
 
@@ -70,7 +70,8 @@ class AuthScreen extends React.Component {
 						<Text style={{marginVertical: 40}}></Text>
 						<TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")}>
 							<Text style={styles.signUpText}>
-								Don't have an account? <Text style={{textDecorationLine: "underline"}}>Sign up here</Text>.
+								Don't have an account? <Text style={{textDecorationLine: "underline"}}>Sign up
+								here</Text>.
 							</Text>
 						</TouchableOpacity>
 						<Button

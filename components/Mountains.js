@@ -27,24 +27,24 @@ class Mountains extends React.Component {
 	render() {
 		return !isLoaded(this.props.mountains) ? <LoadingIcon/> :
 			isEmpty(this.props.mountains) ? <Text>Mountains List Is Empty</Text> :
-			<FlatList
-				data={this.props.mountains}
-				keyExtractor={(item, idx) => idx.toString()}
-				renderItem={(item, idx) => (
-					<TouchableOpacity onPress={() => this._onPress(item.item)}>
-						<View style={styles.mountainContainer}>
-							<Image source={{uri: "/assets/images/mountains/arapahoe_basin.jpg"}}/>
-							<Text style={styles.mountainTitle}>
-								{item.item.name}
-							</Text>
-							<Icon
-								name={Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-forward"}
-								style={styles.mountainArrow}
-							/>
-						</View>
-					</TouchableOpacity>
-				)}
-			/>;
+				<FlatList
+					data={this.props.mountains}
+					keyExtractor={(item, idx) => idx.toString()}
+					renderItem={(item, idx) => (
+						<TouchableOpacity onPress={() => this._onPress(item.item)}>
+							<View style={styles.mountainContainer}>
+								<Image source={{uri: "/assets/images/mountains/arapahoe_basin.jpg"}}/>
+								<Text style={styles.mountainTitle}>
+									{item.item.name}
+								</Text>
+								<Icon
+									name={Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-forward"}
+									style={styles.mountainArrow}
+								/>
+							</View>
+						</TouchableOpacity>
+					)}
+				/>;
 	}
 
 	_onPress = (mountain) => {

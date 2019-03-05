@@ -6,7 +6,7 @@ import {
 
 export default LoadingIcon = () => (
 	<View style={styles.container}>
-		<ActivityIndicator />
+		<ActivityIndicator/>
 	</View>
 );
 

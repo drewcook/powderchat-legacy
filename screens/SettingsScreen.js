@@ -11,8 +11,8 @@ import {
 import colors from "../constants/Colors";
 import userService from "../database/userService";
 import Button from "../components/Button";
-import {connect} from "react-redux";
-import {withFirebase} from "react-redux-firebase";
+import { connect } from "react-redux";
+import { withFirebase } from "react-redux-firebase";
 
 class SettingsScreen extends React.Component {
 	static navigationOptions = {
@@ -101,7 +101,7 @@ class SettingsScreen extends React.Component {
 				<Button
 					bgColor={colors.primary}
 					title="Sign Out"
-					onPress={()=> this.props.firebase.logout()}
+					onPress={() => this.props.firebase.logout()}
 				/>
 			</ScrollView>
 		);

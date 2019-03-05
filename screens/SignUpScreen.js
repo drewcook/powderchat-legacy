@@ -7,8 +7,8 @@ import {
 	View,
 } from "react-native";
 import Button from "../components/Button";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import * as AuthActions from "../store/actions/authActions";
 import { withFirebase } from "react-redux-firebase";
 
@@ -29,7 +29,8 @@ class SignUpScreen extends React.Component {
 		return (
 			<ImageBackground source={require('../assets/images/auth_bg2.jpg')} style={styles.bgImg}>
 				<View style={styles.container}>
-					<Text style={styles.text}>It's easy to sign up! Just use a valid email address with a unique password and you'll be ready to go.</Text>
+					<Text style={styles.text}>It's easy to sign up! Just use a valid email address with a unique
+						password and you'll be ready to go.</Text>
 					<View style={styles.fieldContainer}>
 						<TextInput
 							style={styles.textField}
@@ -89,8 +90,7 @@ const styles = {
 	},
 };
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => bindActionCreators(AuthActions, dispatch);
 

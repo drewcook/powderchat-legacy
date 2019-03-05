@@ -9,7 +9,7 @@ import {
 	View,
 } from 'react-native';
 import colors from "../constants/Colors";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class HomeScreen extends React.Component {
 	static navigationOptions = {
