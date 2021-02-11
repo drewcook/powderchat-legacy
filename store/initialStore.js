@@ -1,6 +1,7 @@
 const initialStore = {
 	auth: {
 		authError: null,
+		user: {},
 	},
 	mountains: {
 		loading: false,

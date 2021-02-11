@@ -27,8 +27,6 @@ class AuthScreen extends React.Component {
 		};
 	}
 
-
-
 	render() {
 		return (
 			<ImageBackground source={require('../assets/images/auth_bg1.jpg')} style={styles.bgImg}>

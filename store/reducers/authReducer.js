@@ -12,6 +12,17 @@ const authReducer = (state = initialStore.auth, action) => {
 				...state,
 				authError: "Login failed"
 			};
+		case "CREATE_ACCOUNT_SUCCESS":
+			return {
+				...state,
+				authError: null,
+				user: action.payload,
+			};
+		case "CREATE_ACCOUNT_FAIL":
+			return {
+				...state,
+				authError: "Create account failed"
+			};
 		default:
 			return state;
 	}

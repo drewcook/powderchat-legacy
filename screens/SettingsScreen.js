@@ -11,6 +11,7 @@ import {
 import colors from "../constants/Colors";
 import userService from "../database/userService";
 import Button from "../components/Button";
+import LoadingIcon from "../components/LoadingIcon";
 import { connect } from "react-redux";
 import { withFirebase } from "react-redux-firebase";
 
@@ -39,8 +40,7 @@ class SettingsScreen extends React.Component {
 	render() {
 		const user = this.props.auth;
 		const {settings} = this.state;
-		return (
-			user.uid &&
+		return !user.uid ? <LoadingIcon/> :
 			<ScrollView style={styles.settingsContainer}>
 				<View style={styles.profileContainer}>
 					{user.photoURL ?
@@ -102,9 +102,9 @@ class SettingsScreen extends React.Component {
 					bgColor={colors.primary}
 					title="Sign Out"
 					onPress={() => this.props.firebase.logout()}
+					btnStyle={{marginHorizontal: 30}}
 				/>
-			</ScrollView>
-		);
+			</ScrollView>;
 	}
 
 	_toggleSetting1 = val => this.setState({settings: {...this.state.settings, setting1: val}});

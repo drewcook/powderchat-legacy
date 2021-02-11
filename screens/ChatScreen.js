@@ -11,13 +11,15 @@ import {
 import Icon from '../components/Icon';
 import { GiftedChat } from "react-native-gifted-chat";
 import Fire from "../database/firebaseConfig";
-import firebase from "firebase";
+import userService from "../database/userService";
 
 export default class ChatScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			messages: [],
+			chats: [],
+			user: null,
 		};
 	}
 
@@ -27,11 +29,12 @@ export default class ChatScreen extends React.Component {
 
 
 	componentDidMount() {
-		Fire.shared.on(messages => this.setState({messages}));
+		//Fire.shared.on(messages => this.setState({messages}));
+		userService.getCurrentUser().then(user => this.setState({user}))
 	}
 
 	componentWillUnmount() {
-		Fire.shared.off();
+		//Fire.shared.off();
 	}
 
 	onSend = (messages = []) => {
@@ -40,21 +43,32 @@ export default class ChatScreen extends React.Component {
 		}));
 	}
 
-	get user() {
-		// Return our name and our UID for GiftedChat to parse
-		const user = {
-			name: firebase.auth().currentUser.displayName || "Anonymous",
-			_id: Fire.shared.uid,
-			avatar: firebase.auth().currentUser.photoURL || null,
-		};
-		return user;
-	}
-
 	render() {
+		const {user} = this.state;
+		user && console.log(user);
 		return (
-			/*<ScrollView style={styles.container}>
-				<FlatList
-					data={chats}
+			user &&
+			<ScrollView style={styles.container}>
+				{user.currentMountain &&
+				<TouchableOpacity onPress={() => this._onPress(user.currentMountain)}>
+					<View style={styles.chatContainer}>
+						<Text style={styles.chatTitle}>
+							{user.currentMountain.name}
+						</Text>
+						<Icon
+							name={Platform.OS === "ios" ? "ios-arrow-forward" : "md-arrow-forward"}
+							style={styles.chatArrow}
+						/>
+					</View>
+				</TouchableOpacity>
+				}
+				<GiftedChat
+					messages={this.state.messages}
+					onSend={messages => Fire.shared.send(messages)}
+					user={user}
+				/>
+				{/*<FlatList
+					data={user.currentMountain}
 					keyExtractor={(item, idx) => idx.toString()}
 					renderItem={(item, idx) => (
 						<TouchableOpacity onPress={() => this._onPress(item.item.name)}>
@@ -69,25 +83,18 @@ export default class ChatScreen extends React.Component {
 							</View>
 						</TouchableOpacity>
 					)}
-				/>
-			</ScrollView>*/
-
-			<GiftedChat
-				messages={this.state.messages}
-				onSend={messages => Fire.shared.send(messages)}
-				user={this.user}
-			/>
-
+				/>*/}
+			</ScrollView>
 		);
 	}
 
-	_onPress = (name) => {
-		console.log(name);
+	_onPress = (mountain) => {
+		console.log(mountain);
 	}
 }
 
 const styles = StyleSheet.create({
-	container: {
+	viewContainer: {
 		flex: 1,
 		backgroundColor: '#fff',
 	},

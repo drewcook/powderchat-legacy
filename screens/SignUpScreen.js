@@ -13,7 +13,7 @@ import colors from "../constants/Colors";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as AuthActions from "../store/actions/authActions";
-import { withFirebase } from "react-redux-firebase";
+import { withFirebase, isLoaded } from "react-redux-firebase";
 
 class SignUpScreen extends React.Component {
 	constructor(props) {
@@ -144,8 +144,10 @@ const styles = {
 	}
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+	auth: state.firebase.auth,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(AuthActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(withFirebase(SignUpScreen));
+export default connect(mapStateToProps, mapDispatchToProps)(withFirebase(SignUpScreen));
